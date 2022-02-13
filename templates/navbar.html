@@ -1,0 +1,26 @@
+<nav>
+    <div>
+        <div>
+            <ul>
+                <li>
+                    <a href="{% url 'employers:home-page' %}">Strona główna</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'employers:dashboard' %}">Dashboard ({{ request.user.username|title }})</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'accounts:logout' %}">Wyloguj się</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'accounts:login' %}">Zaloguj się</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'accounts:signup' %}">Zarejestruj się</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
