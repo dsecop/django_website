@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Now zadanie {% endblock title %}
+
+{% block content %}
+
+<h2>Utwórz nowe zadanie</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Dodaj zadanie</button>
+</form>
+
+{% endblock content %}

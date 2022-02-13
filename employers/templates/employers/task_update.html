@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Edycja zadanie {% endblock title %}
+
+{% block content %}
+
+<h2>Edycja zadanie</h2>
+
+<a href="{% url 'employers:task-detail' task.id %}">Powrót do zadania</a>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Zapisz zadanie</button>
+</form>
+
+{% endblock content %}

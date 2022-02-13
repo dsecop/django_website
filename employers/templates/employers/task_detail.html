@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Szczegóły zadania
+{% endblock title %}
+
+{% block content %}
+<div>
+    <a href="{% url 'employers:dashboard' %}">Powrót do listy zadań</a>
+    <div>
+        <h3>Tytuł: {{ task.name|title }}</h3>
+        <p>Opis: {{ task.description }}</p>
+        <p>Autor: {{ task.author }}</p>
+        <p>Data utworzenia: {{ task.created_at|date:'d-M-Y H:i' }}</p>
+        <p>Aktywne do: {{ task.valid_until|date:'d-M-Y H:i' }}</p>
+        Tags:
+        {% for tag in task.tags.all %}
+            <span>{{ tag }}</span>
+        {% endfor %}
+    </div>
+    {% if task.author == user %}
+        <a href="{% url 'employers:task-update' task.id %}">Zaktualizuj zadanie</a>
+        <a href="{% url 'employers:task-delete' task.id %}">Usuń zadanie</a>
+    {% endif %}
+</div>
+{% endblock content %}

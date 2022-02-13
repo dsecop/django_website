@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Lista zadań {% endblock title %}
+
+{% block content %}
+
+<h2>Lista zadań</h2>
+
+{% if request.user.is_authenticated %}
+    {% if request.user.user_type == 'employer' %}
+        <a href="{% url 'employers:task-create' %}">Utwórz nowe zadanie</a>
+    {% endif %}
+
+    {% for task in tasks %}
+        <div>
+            <h3>Tytuł: <a href="{%  url 'employers:task-detail' task.id %}">{{ task.name }}</a></h3>
+            <p>Opis: {{ task.description|slice:'50' }} [...]</p>
+            <p>Autor: {{ task.author }}</p>
+            <p>Data utworzenia: {{ task.created_at|date:'d-M-Y H:i' }}</p>
+            <p>Aktywne do: {{ task.valid_until|date:'d-M-Y H:i' }}</p>
+            Tags: {% for tag in task.tags.all %}
+                <span>{{ tag }}</span>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock content %}
