@@ -19,10 +19,10 @@ class UserAdmin(UserAdmin):
 
     # Change user
     fieldsets = (
-        ('Dane osobowe', {'fields': ('email', 'username', 'first_name', 'last_name', 'website', 'photo')}),
-        ('Adres', {'fields': ('postcode', 'address',)}),
+        ('Dane osobowe', {'fields': ('email', 'username', 'first_name', 'last_name', 'website', 'photo', 'password')}),
+        ('Adres', {'fields': ('postcode', 'address')}),
         ('Konto', {'fields': ('user_type',)}),
-        ('Uprawnienia', {'fields': ('is_staff', 'is_active', 'is_superuser', 'user_permissions', 'groups',)}),
+        ('Uprawnienia', {'fields': ('is_staff', 'is_active', 'is_superuser', 'user_permissions', 'groups')}),
     )
 
     # Add user
