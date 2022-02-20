@@ -6,9 +6,15 @@
                     <a href="{% url 'employers:home-page' %}">Strona główna</a>
                 </li>
                 {% if request.user.is_authenticated %}
-                    <li>
-                        <a href="{% url 'employers:dashboard' %}">Dashboard ({{ request.user.username|title }})</a>
-                    </li>
+                    {% if user.user_type == User.EMPLOYER %}
+                        <li>
+                            <a href="{% url 'employers:dashboard' %}">Dashboard ({{ request.user.username|title }})</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'applicants:applicant-dashboard' %}">Dashboard ({{ request.user.username|title }})</a>
+                        </li>
+                    {% endif %}
                     <li>
                         <a href="{% url 'accounts:logout' %}">Wyloguj się</a>
                     </li>
