@@ -6,7 +6,11 @@
 
 {% block content %}
 <div>
+    {% if request.user.user_type == 'employer' %}
     <a href="{% url 'employers:dashboard' %}">Powrót do listy zadań</a>
+    {% else %}
+    <a href="{% url 'applicants:all-task-list' %}">Powrót do listy zadań</a>
+    {% endif %}
     <div>
         <h3>Tytuł: {{ task.name|title }}</h3>
         <p>Opis: {{ task.description }}</p>
@@ -18,9 +22,19 @@
             <span>{{ tag }}</span>
         {% endfor %}
     </div>
+
     {% if task.author == user %}
         <a href="{% url 'employers:task-update' task.id %}">Zaktualizuj zadanie</a>
         <a href="{% url 'employers:task-delete' task.id %}">Usuń zadanie</a>
     {% endif %}
+
+    {% if request.user.is_authenticated %}
+        <form action="{% url 'applicants:applicant-enroll-task' %}" method="post">
+            {% csrf_token %}
+            {{ enroll_form }}
+            <input type="submit" class="button" value="Dołącz do zadania">
+        </form>
+    {% endif %}
+
 </div>
 {% endblock content %}
