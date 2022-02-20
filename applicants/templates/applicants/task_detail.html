@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Szczegóły zadania
+{% endblock title %}
+
+{% block content %}
+<div>
+    <a href="{% url 'applicants:applicant-dashboard' %}">Powrót do listy moich zadań</a>
+    <div>
+        <h3>Tytuł: {{ task.name|title }}</h3>
+        <p>Opis: {{ task.description }}</p>
+        <p>Autor: {{ task.author }}</p>
+        <p>Data utworzenia: {{ task.created_at|date:'d-M-Y H:i' }}</p>
+        <p>Aktywne do: {{ task.valid_until|date:'d-M-Y H:i' }}</p>
+        Tags:
+        {% for tag in task.tags.all %}
+            <span>{{ tag }}</span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
