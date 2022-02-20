@@ -21,7 +21,3 @@ class CreateNewTaskForm(forms.ModelForm):
         widgets = {
             'valid_until': DatePickerInput(),
         }
-
-
-class TaskEnrollForm(forms.Form):
-    task = forms.ModelChoiceField(queryset=Task.objects.all(), widget=forms.HiddenInput)
