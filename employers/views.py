@@ -2,9 +2,10 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.views import generic
 from employers.models import Task
 from django.views import generic
-from employers.forms import CreateNewTaskForm, TaskEnrollForm
+from employers.forms import CreateNewTaskForm
 from django.urls import reverse_lazy
 from employers.mixins import AccessRestrictedMixin
+from applicants.forms import TaskEnrollForm
 
 
 class HomePageView(generic.TemplateView):
@@ -34,15 +35,16 @@ class DashboardView(AccessRestrictedMixin, generic.ListView):
         return qs.filter(author=self.request.user)
 
 
-class TaskDetailView(AccessRestrictedMixin, generic.DetailView):
+class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'employers/task_detail.html'
     model = Task
     context_object_name = 'task'
     pk_url_kwarg = 'id'
 
-    def get_queryset(self):
-        qs = super(TaskDetailView, self).get_queryset()
-        return qs.filter(author=self.request.user)
+    def get_context_data(self, **kwargs):
+        context = super(TaskDetailView, self).get_context_data(**kwargs)
+        context['enroll_form'] = TaskEnrollForm(initial={'task':self.object})
+        return context
 
 
 class TaskUpdateView(AccessRestrictedMixin, generic.UpdateView):
