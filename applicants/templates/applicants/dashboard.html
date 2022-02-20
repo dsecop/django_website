@@ -6,6 +6,16 @@
 
 {% block content %}
 
+<p><a href="{% url 'applicants:all-task-list' %}">Lista wszystkich zadań</a></p>
+
 <h2>Moja lista zadań</h2>
+
+{% for task in tasks %}
+    <p><a href="{% url 'applicants:applicant-task-detail' task.id %}">{{ task.name }}</a></p>
+    {% empty %}
+    <p>Jeszcze nie zapisałeś się do żadnego zadania
+        <a href="#">Sprawdz zadania</a> i zapisz się na wybrane.
+    </p>
+{% endfor %}
 
 {% endblock content %}
